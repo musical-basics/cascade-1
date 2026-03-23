@@ -1,0 +1,54 @@
+/* ============================================
+   InlineEdit Component Styles
+   ============================================ */
+
+/* --- Read mode --- */
+.inline-edit-display {
+  cursor: pointer;
+  border-radius: var(--radius-xs);
+  padding: 2px 4px;
+  transition: background var(--transition-fast);
+  display: inline-block;
+  min-width: 40px;
+}
+
+.inline-edit-display:hover {
+  background: var(--bg-surface-hover);
+}
+
+.inline-edit-display:focus-visible {
+  outline: 2px solid var(--lane-accent, var(--accent-phase-1));
+  outline-offset: 1px;
+}
+
+.inline-edit-empty {
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* --- Edit mode --- */
+.inline-edit-input {
+  background: rgba(255, 255, 255, 0.03);
+  border: none;
+  outline: none;
+  color: inherit;
+  font: inherit;
+  width: 100%;
+  padding: 2px 4px;
+  border-radius: var(--radius-sm);
+  caret-color: var(--lane-accent, var(--accent-phase-1));
+  transition: box-shadow var(--transition-fast);
+}
+
+.inline-edit-input:focus {
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: 0 0 0 2px var(--lane-accent, var(--accent-phase-1)),
+              0 0 12px -2px var(--lane-accent, var(--accent-phase-1));
+}
+
+/* Textarea specific */
+textarea.inline-edit-input {
+  resize: vertical;
+  min-height: 60px;
+  line-height: 1.6;
+}

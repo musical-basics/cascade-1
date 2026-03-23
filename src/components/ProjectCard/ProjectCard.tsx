@@ -1,4 +1,6 @@
 import type { Project } from '../../types';
+import { useProjects } from '../../context/ProjectsContext';
+import { InlineEdit } from '../InlineEdit/InlineEdit';
 import './ProjectCard.css';
 
 interface ProjectCardProps {
@@ -6,12 +8,17 @@ interface ProjectCardProps {
 }
 
 export function ProjectCard({ project }: ProjectCardProps) {
+  const { updateProject, updateTask } = useProjects();
+
   return (
     <div className="project-card">
       {/* Title */}
-      <h3 className="card-title" data-field="title">
-        {project.title || 'Untitled Project'}
-      </h3>
+      <InlineEdit
+        value={project.title}
+        onSave={(val) => updateProject(project.id, { title: val })}
+        className="card-title"
+        placeholder="Untitled project"
+      />
 
       {/* Task List */}
       <ul className="task-list">
@@ -19,7 +26,13 @@ export function ProjectCard({ project }: ProjectCardProps) {
           project.tasks.map((task) => (
             <li key={task.id} className="task-item" data-task-id={task.id}>
               <span className="task-bullet">•</span>
-              <span className="task-text">{task.text || 'New task...'}</span>
+              <InlineEdit
+                value={task.text}
+                onSave={(val) => updateTask(project.id, task.id, val)}
+                className="task-text"
+                placeholder="New task..."
+                allowEmpty={true}
+              />
             </li>
           ))
         ) : (
@@ -31,11 +44,14 @@ export function ProjectCard({ project }: ProjectCardProps) {
 
       {/* Notes */}
       <div className="card-notes">
-        {project.notes ? (
-          <p className="notes-text">{project.notes}</p>
-        ) : (
-          <p className="notes-text notes-placeholder">Add notes...</p>
-        )}
+        <InlineEdit
+          value={project.notes}
+          onSave={(val) => updateProject(project.id, { notes: val })}
+          element="textarea"
+          className="notes-text"
+          placeholder="Add notes..."
+          allowEmpty={true}
+        />
       </div>
     </div>
   );
