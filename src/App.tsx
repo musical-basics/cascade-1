@@ -1,5 +1,6 @@
 import { useProjects } from './context/ProjectsContext'
 import { PhaseLane } from './components/PhaseLane/PhaseLane'
+import { ProjectCard } from './components/ProjectCard/ProjectCard'
 import './App.css'
 
 const PHASES = [1, 2, 3, 4, 5] as const;
@@ -19,22 +20,7 @@ function App() {
           return (
             <PhaseLane key={phase} phaseNumber={phase}>
               {phaseProjects.map((project) => (
-                <div
-                  key={project.id}
-                  style={{
-                    background: 'var(--bg-surface)',
-                    border: '1px solid var(--border-subtle)',
-                    borderRadius: 'var(--radius-card)',
-                    padding: '16px',
-                    minWidth: '280px',
-                    flexShrink: 0,
-                  }}
-                >
-                  <strong>{project.title}</strong>
-                  <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginTop: '4px' }}>
-                    {project.tasks.length} task{project.tasks.length !== 1 ? 's' : ''}
-                  </p>
-                </div>
+                <ProjectCard key={project.id} project={project} />
               ))}
             </PhaseLane>
           );
