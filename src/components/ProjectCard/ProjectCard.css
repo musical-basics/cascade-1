@@ -2,6 +2,17 @@
    ProjectCard Component Styles
    ============================================ */
 
+@keyframes card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-12px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 .project-card {
   background: var(--bg-surface);
   border: 1px solid var(--border-subtle);
@@ -13,14 +24,15 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-  transition: transform var(--transition-default),
-              box-shadow var(--transition-default),
+  transition: transform var(--transition-smooth),
+              box-shadow var(--transition-smooth),
               border-color var(--transition-default);
   scroll-snap-align: start;
+  animation: card-enter 0.35s ease-out;
 }
 
 .project-card:hover {
-  transform: translateY(-2px);
+  transform: translateY(-3px);
   box-shadow: var(--shadow-card-hover);
   border-color: var(--border-accent);
 }
