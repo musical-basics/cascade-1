@@ -160,3 +160,25 @@ a {
   padding: 20px 24px;
   flex: 1;
 }
+
+/* --- Add Project Button --- */
+.add-project-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 8px 18px;
+  border-radius: 999px;
+  border: 1px solid var(--accent-phase-1);
+  color: var(--accent-phase-1);
+  background: transparent;
+  cursor: pointer;
+  transition: all var(--transition-default);
+}
+
+.add-project-btn:hover {
+  background: color-mix(in srgb, var(--accent-phase-1) 12%, transparent);
+  box-shadow: 0 0 16px -4px var(--accent-phase-1);
+  transform: scale(1.03);
+}

@@ -122,3 +122,69 @@
   color: var(--text-muted);
   font-style: italic;
 }
+
+/* --- Action Buttons --- */
+.card-action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 4px 8px;
+  transition: all var(--transition-fast);
+  cursor: pointer;
+}
+
+.card-action-btn:hover:not(:disabled) {
+  background: var(--bg-surface-hover);
+  color: var(--lane-accent, var(--accent-phase-1));
+  border-color: var(--lane-accent, var(--accent-phase-1));
+  transform: scale(1.05);
+}
+
+.card-action-btn:disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+}
+
+/* Add task button */
+.add-task-btn {
+  align-self: flex-start;
+  font-size: 0.85rem;
+  padding: 2px 10px;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+}
+
+.add-task-btn:hover:not(:disabled) {
+  transform: scale(1.1) rotate(90deg);
+}
+
+/* Card footer actions */
+.card-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 8px;
+}
+
+.arrow-btn {
+  font-size: 0.7rem;
+  padding: 4px 10px;
+}
+
+.phase-badge {
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--lane-accent, var(--text-secondary));
+  opacity: 0.7;
+}

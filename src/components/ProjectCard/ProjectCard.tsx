@@ -8,7 +8,16 @@ interface ProjectCardProps {
 }
 
 export function ProjectCard({ project }: ProjectCardProps) {
-  const { updateProject, updateTask } = useProjects();
+  const { updateProject, updateTask, addTask, moveProject } = useProjects();
+
+  const handleAddTask = () => {
+    const newTask = {
+      id: crypto.randomUUID(),
+      text: '',
+      completed: false,
+    };
+    addTask(project.id, newTask);
+  };
 
   return (
     <div className="project-card">
@@ -22,25 +31,29 @@ export function ProjectCard({ project }: ProjectCardProps) {
 
       {/* Task List */}
       <ul className="task-list">
-        {project.tasks.length > 0 ? (
-          project.tasks.map((task) => (
-            <li key={task.id} className="task-item" data-task-id={task.id}>
-              <span className="task-bullet">•</span>
-              <InlineEdit
-                value={task.text}
-                onSave={(val) => updateTask(project.id, task.id, val)}
-                className="task-text"
-                placeholder="New task..."
-                allowEmpty={true}
-              />
-            </li>
-          ))
-        ) : (
-          <li className="task-item task-empty">
-            <span className="task-text-muted">No tasks yet</span>
+        {project.tasks.map((task) => (
+          <li key={task.id} className="task-item" data-task-id={task.id}>
+            <span className="task-bullet">•</span>
+            <InlineEdit
+              value={task.text}
+              onSave={(val) => updateTask(project.id, task.id, val)}
+              className="task-text"
+              placeholder="New task..."
+              allowEmpty={true}
+              autoFocus={task.text === ''}
+            />
           </li>
-        )}
+        ))}
       </ul>
+
+      {/* Add Task Button */}
+      <button
+        className="card-action-btn add-task-btn"
+        onClick={handleAddTask}
+        title="Add task"
+      >
+        +
+      </button>
 
       {/* Notes */}
       <div className="card-notes">
@@ -52,6 +65,27 @@ export function ProjectCard({ project }: ProjectCardProps) {
           placeholder="Add notes..."
           allowEmpty={true}
         />
+      </div>
+
+      {/* Phase Navigation Arrows */}
+      <div className="card-actions">
+        <button
+          className="card-action-btn arrow-btn"
+          onClick={() => moveProject(project.id, 'up')}
+          disabled={project.phase <= 1}
+          title="Move to previous phase"
+        >
+          ▲
+        </button>
+        <span className="phase-badge">Phase {project.phase}</span>
+        <button
+          className="card-action-btn arrow-btn"
+          onClick={() => moveProject(project.id, 'down')}
+          disabled={project.phase >= 5}
+          title="Move to next phase"
+        >
+          ▼
+        </button>
       </div>
     </div>
   );
