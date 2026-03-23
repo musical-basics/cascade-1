@@ -37,6 +37,18 @@
   border-color: var(--border-accent);
 }
 
+/* --- Card Header --- */
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.card-header .card-title {
+  flex: 1;
+  min-width: 0;
+}
+
 /* --- Title --- */
 .card-title {
   font-size: 1rem;
@@ -54,6 +66,77 @@
 
 .card-title:hover {
   background: var(--bg-surface-hover);
+}
+
+/* --- Icon Buttons (shared) --- */
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  font-size: 0.7rem;
+  border: none;
+  background: transparent;
+  border-radius: var(--radius-xs);
+  color: var(--text-muted);
+  cursor: pointer;
+  opacity: 0;
+  transition: all var(--transition-fast);
+}
+
+.icon-btn:hover {
+  background: var(--bg-surface-hover);
+  color: var(--accent-phase-5);
+  opacity: 1;
+}
+
+/* Show on card hover */
+.project-card:hover .icon-btn {
+  opacity: 0.6;
+}
+
+.project-card:hover .icon-btn:hover {
+  opacity: 1;
+}
+
+/* Card-level delete */
+.delete-card-btn {
+  opacity: 0;
+}
+
+.delete-card-btn.confirm {
+  opacity: 1 !important;
+  color: var(--accent-phase-5);
+  background: rgba(255, 23, 68, 0.12);
+  box-shadow: 0 0 8px -2px var(--accent-phase-5);
+  animation: pulse-delete 1s ease infinite;
+}
+
+@keyframes pulse-delete {
+  0%, 100% { box-shadow: 0 0 8px -2px var(--accent-phase-5); }
+  50% { box-shadow: 0 0 14px -2px var(--accent-phase-5); }
+}
+
+/* Task-line actions (appear on row hover) */
+.task-actions {
+  display: flex;
+  gap: 2px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.task-delete-btn {
+  opacity: 0;
+}
+
+.task-item:hover .task-delete-btn {
+  opacity: 0.6;
+}
+
+.task-item:hover .task-delete-btn:hover {
+  opacity: 1;
 }
 
 /* --- Task List --- */

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { Project } from '../../types';
 import { useProjects } from '../../context/ProjectsContext';
 import { InlineEdit } from '../InlineEdit/InlineEdit';
@@ -8,7 +9,8 @@ interface ProjectCardProps {
 }
 
 export function ProjectCard({ project }: ProjectCardProps) {
-  const { updateProject, updateTask, addTask, moveProject } = useProjects();
+  const { updateProject, updateTask, addTask, deleteTask, deleteProject, moveProject } = useProjects();
+  const [confirmDelete, setConfirmDelete] = useState(false);
 
   const handleAddTask = () => {
     const newTask = {
@@ -19,15 +21,33 @@ export function ProjectCard({ project }: ProjectCardProps) {
     addTask(project.id, newTask);
   };
 
+  const handleDeleteProject = () => {
+    if (confirmDelete) {
+      deleteProject(project.id);
+    } else {
+      setConfirmDelete(true);
+      setTimeout(() => setConfirmDelete(false), 3000);
+    }
+  };
+
   return (
     <div className="project-card">
-      {/* Title */}
-      <InlineEdit
-        value={project.title}
-        onSave={(val) => updateProject(project.id, { title: val })}
-        className="card-title"
-        placeholder="Untitled project"
-      />
+      {/* Card Header: Title + Delete Card */}
+      <div className="card-header">
+        <InlineEdit
+          value={project.title}
+          onSave={(val) => updateProject(project.id, { title: val })}
+          className="card-title"
+          placeholder="Untitled project"
+        />
+        <button
+          className={`icon-btn delete-card-btn ${confirmDelete ? 'confirm' : ''}`}
+          onClick={handleDeleteProject}
+          title={confirmDelete ? 'Click again to confirm' : 'Delete project'}
+        >
+          {confirmDelete ? '✕' : '🗑'}
+        </button>
+      </div>
 
       {/* Task List */}
       <ul className="task-list">
@@ -42,6 +62,15 @@ export function ProjectCard({ project }: ProjectCardProps) {
               allowEmpty={true}
               autoFocus={task.text === ''}
             />
+            <div className="task-actions">
+              <button
+                className="icon-btn task-delete-btn"
+                onClick={() => deleteTask(project.id, task.id)}
+                title="Delete task"
+              >
+                🗑
+              </button>
+            </div>
           </li>
         ))}
       </ul>
